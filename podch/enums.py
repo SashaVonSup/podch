@@ -6,6 +6,9 @@ class Square(Enum):
     FIRST = 1
     SECOND = 2
 
+    def __invert__(self):
+        return Square.EMPTY if self == Square.EMPTY else Square.SECOND if self == Square.FIRST else Square.FIRST
+
 
 class Player(Enum):
     FIRST = 1

@@ -39,3 +39,29 @@ class Board:
                 res *= 4  # len(Square) + 1
                 res += square.value + 1
         return res
+
+    @property
+    def _transforms(self):
+        def transforms(board_):
+            def reflects(board):
+                yield board
+                yield board[::-1]
+                yield [row[::-1] for row in board]
+                yield [row[::-1] for row in board[::-1]]
+            for form in reflects(board_):
+                yield form
+            if self.height == self.width:
+                for form in reflects([[board_[j][i] for j in range(self.width)] for i in range(self.height)]):
+                    yield form
+        for transform in transforms(self._board):
+            yield transform
+        for transform in transforms([[~square for square in row] for row in self._board]):
+            yield transform
+
+    def hash(self) -> int:  # min hash of all transformations
+        temp = Board(self.height, self.width)
+        res = hash(self)
+        for board in self._transforms:
+            temp._board = board
+            res = min(res, hash(temp))
+        return res

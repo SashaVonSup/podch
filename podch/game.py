@@ -14,7 +14,7 @@ class Game:
 
     def __init__(self, height: int, width: int):
         self._board = Board(height, width)
-        self._used = {hash(self._board)}
+        self._used = {self._board.hash()}
         self.current_move = Player.FIRST
         self.is_over = False
 
@@ -30,7 +30,7 @@ class Game:
         if self._board[x, y] == Square((~player).value):
             return 'foreign stone in the square' if message else False
         self._board[x, y] = Square(player.value) if self._board[x, y] == Square.EMPTY else Square.EMPTY
-        res = hash(self._board) not in self._used
+        res = self._board.hash() not in self._used
         self._board.rollback()
         if message:
             return '' if res else 'situation used before'
@@ -45,7 +45,7 @@ class Game:
         if message := self.is_possible(x, y, self.current_move, True):
             raise ImpossibleMoveError(message)
         self._board[x, y] = Square(self.current_move.value) if self._board[x, y] == Square.EMPTY else Square.EMPTY
-        self._used.add(hash(self._board))
+        self._used.add(self._board.hash())
         if not self.possible_moves(~self.current_move):
             self.is_over = True
             self.winner = self.current_move
