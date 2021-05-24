@@ -27,7 +27,7 @@ class Game:
         return self._board.width
 
     def is_possible(self, x: int, y: int, player: Player, message: bool = False) -> Union[bool, str]:
-        if self._board[x, y] == Square(~player.value):
+        if self._board[x, y] == Square((~player).value):
             return 'foreign stone in the square' if message else False
         self._board[x, y] = Square(player.value) if self._board[x, y] == Square.EMPTY else Square.EMPTY
         res = hash(self._board) not in self._used
@@ -50,3 +50,6 @@ class Game:
             self.is_over = True
             self.winner = self.current_move
         self.current_move = ~self.current_move
+
+    def __getitem__(self, item):
+        return self._board[item]

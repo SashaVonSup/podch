@@ -23,11 +23,11 @@ class Board:
     def __setitem__(self, key: tuple[int, int], value):
         if len(key) != 2:
             raise IndexError(f'expected size of key 2, {len(key)} found')
+        self._last_key = key
+        self._last_square = self._board[key[0]][key[1]]
         if isinstance(value, Enum):
             value = value.value
         self._board[key[0]][key[1]] = Square(value)
-        self._last_key = key
-        self._last_square = value
 
     def rollback(self):
         self[self._last_key] = self._last_square
