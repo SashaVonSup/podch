@@ -1,6 +1,5 @@
 from podch import Game
 
-
 if __name__ == '__main__':
     height = int(input('Board height: '))
     width = int(input('Board width: '))

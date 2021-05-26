@@ -48,11 +48,13 @@ class Board:
                 yield board[::-1]
                 yield [row[::-1] for row in board]
                 yield [row[::-1] for row in board[::-1]]
+
             for form in reflects(board_):
                 yield form
             if self.height == self.width:
                 for form in reflects([[board_[j][i] for j in range(self.width)] for i in range(self.height)]):
                     yield form
+
         for transform in transforms(self._board):
             yield transform
         for transform in transforms([[~square for square in row] for row in self._board]):

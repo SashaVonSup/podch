@@ -1,7 +1,7 @@
 from typing import Union
 
-from .enums import Square, Player
 from .board import Board
+from .enums import Square, Player
 
 
 class ImpossibleMoveError(Exception):
