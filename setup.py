@@ -10,7 +10,7 @@ with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'requirement
 
 setuptools.setup(
     name='podch',
-    version='1.0.1.1',
+    version='1.0.1.2',
     author='Aleksandr Sup',
     author_email='sup@tmat.me',
     description='Abstract board game',
@@ -25,6 +25,7 @@ setuptools.setup(
         'Topic :: Software Development :: Libraries :: Python Modules'
     ],
     packages=setuptools.find_packages(),
+    data_files=[(os.path.dirname(os.path.realpath(__file__)), ['requirements.txt'])],
     install_requires=install_requires,
     python_requires='>=3.9',
 )

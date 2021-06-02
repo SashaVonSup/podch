@@ -1,11 +1,17 @@
 from .enums import Enum, Square
 
 
+class RollbackError(Exception):
+    pass
+
+
 class Board:
     def __init__(self, height: int, width: int):
         if height <= 0 or width <= 0:
             raise ValueError('height or width not natural')
         self._board = [[Square.EMPTY] * width for _ in range(height)]
+        self._last_key = (0, 0)
+        self._last_square = Square.EMPTY
 
     @property
     def height(self) -> int:
@@ -30,14 +36,17 @@ class Board:
         self._board[key[0]][key[1]] = Square(value)
 
     def rollback(self):
+        if self[self._last_key] == self._last_square:
+            raise RollbackError('nothing to rollback')
         self[self._last_key] = self._last_square
 
     def __hash__(self) -> int:
         res = 0
         for row in self._board:
             for square in row:
-                res *= 4  # len(Square) + 1
+                res *= 5  # len(Square) + 2
                 res += square.value + 1
+            res += 4  # len(Square) + 1 means a newline
         return res
 
     @property
