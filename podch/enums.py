@@ -7,7 +7,13 @@ class Square(Enum):
     SECOND = 2
 
     def __invert__(self):
-        return Square.EMPTY if self == Square.EMPTY else Square.SECOND if self == Square.FIRST else Square.FIRST
+        match self:
+            case Square.EMPTY:
+                return Square.EMPTY
+            case Square.FIRST:
+                return Square.SECOND
+            case Square.SECOND:
+                return Square.FIRST
 
 
 class Player(Enum):
@@ -15,4 +21,8 @@ class Player(Enum):
     SECOND = 2
 
     def __invert__(self):
-        return Player.SECOND if self == Player.FIRST else Player.FIRST
+        match self:
+            case Player.FIRST:
+                return Player.SECOND
+            case Player.SECOND:
+                return Player.FIRST

@@ -1,5 +1,3 @@
-from typing import Union
-
 from .board import Board
 from .enums import Square, Player
 
@@ -26,7 +24,7 @@ class Game:
     def width(self) -> int:
         return self._board.width
 
-    def is_possible(self, x: int, y: int, player: Player, message: bool = False) -> Union[bool, str]:
+    def is_possible(self, x: int, y: int, player: Player, message: bool = False) -> bool | str:
         if self._board[x, y] == Square((~player).value):
             return 'foreign stone in the square' if message else False
         self._board[x, y] = Square(player.value) if self._board[x, y] == Square.EMPTY else Square.EMPTY
